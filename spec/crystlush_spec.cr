@@ -15,7 +15,7 @@ describe Crystlush do
     genome.push({instruction: "FLOAT.*", close: 2, silent: false})
     genome.push({instruction: "EXEC.ROT", close: 0, silent: false})
     genome.push({instruction: "34.44", close: 0, silent: false})
-    expected_program = "( EXEC.DO*TIMES ( 8 11 ) EXEC.IF ( ) ( 17 ( false CODE_QUOTE ( FLOAT.* ) ) EXEC.ROT ( 34.4 ) ( ) ( ) ) )"
+    expected_program = "( EXEC.DO*TIMES ( 8 11 ) EXEC.IF ( ) ( 17 ( false CODE.QUOTE ( FLOAT.* ) ) EXEC.ROT ( 34.44 ) ( ) ( ) ) )"
     translator = Crystlush::Translator.new
     program = translator.translate(genome)
     program.should eq(expected_program)

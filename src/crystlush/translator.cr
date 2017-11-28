@@ -13,8 +13,43 @@ module Crystlush
           # We're a regular instruction:
           # Add us to the stack:
           program_stack << gene[:instruction]
+          # See if we need to add any parenthesis:
+          metadata = METADATA.find{|m|m[:instruction] == gene[:instruction]}
+          if metadata
+            # We need to tweak:
+            program_stack << "("
+            open_paren_stack << ":close"
+            open_close_count = metadata[:parens] - 1
+            open_close_count.times do
+              open_paren_stack << ":close_open"
+            end
+          end
+          # See if we need to take off parenthesis:
+          gene[:close].times do
+            if open_paren_stack.size > 0
+              # Pop one off, add the instructions:
+              paren = open_paren_stack.pop
+              if paren == ":close"
+                program_stack << ")"
+              elsif paren == ":close_open"
+                program_stack << ")"
+                program_stack << "("
+              end
+            end
+          end
         end
       end
+      while open_paren_stack.size > 0
+        # Pop one off, add the instructions:
+        paren = open_paren_stack.pop
+        if paren == ":close"
+          program_stack << ")"
+        elsif paren == ":close_open"
+          program_stack << ")"
+          program_stack << "("
+        end
+      end
+
       return "( " + program_stack.join(" ") + " )"
     end
 
