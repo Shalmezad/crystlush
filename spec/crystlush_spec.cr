@@ -2,7 +2,7 @@ require "./spec_helper"
 
 describe Crystlush do
   it "should handle the main example" do
-    genome = [] of {instruction: String, silent: Bool, close: Int32}
+    genome = [] of Crystlush::Gene
     genome.push({instruction: "EXEC.DO*TIMES", close: 0, silent: false})
     genome.push({instruction: "8", close: 0, silent: false})
     genome.push({instruction: "11", close: 3, silent: false})

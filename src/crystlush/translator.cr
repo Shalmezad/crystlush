@@ -1,6 +1,6 @@
 module Crystlush
   class Translator
-    def translate(genome : Array({instruction: String, silent: Bool, close: Int32}))
+    def translate(genome : Array(Gene))
       open_paren_stack = [] of String
       program_stack = [] of String
       genome.each do |gene|
