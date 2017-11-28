@@ -9,6 +9,8 @@ module Crystlush
       property max_random_integer : Int32 = 10
       property min_random_float : Float64 = -1.0
       property max_random_float : Float64 = 1.0
+      property min_instruction_count : Int32 = 20
+      property max_instruction_count : Int32 = 100
     end
 
     property configuration : Configuration = Configuration.new
@@ -17,7 +19,7 @@ module Crystlush
       rng = Random.new
       genome = [] of Gene
       # Pick a random number of genes to add:
-      num_genes = rng.rand(100)
+      num_genes = rng.rand(configuration.min_instruction_count..configuration.max_instruction_count)
       num_genes.times do
         genome << pick_gene(rng)
       end
