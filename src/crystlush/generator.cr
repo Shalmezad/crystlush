@@ -1,6 +1,14 @@
 module Crystlush
   # Generates *new* crystlush genomes.
   class Generator
+
+    class Configuration
+      property instruction_set : Array(String) = [] of String
+      property literal_set : Array(String) = [] of String
+    end
+
+    property configuration : Configuration = Configuration.new
+
     def generate() : Array(Gene)
       rng = Random.new
       genome = [] of Gene
@@ -34,13 +42,28 @@ module Crystlush
     end
 
     def pick_operation(rng : Random) : String
-      # TODO: Code me
-      return "INTEGER.ADD"
+      return random_element(configuration.instruction_set, rng)
     end
 
     def pick_literal(rng : Random) : String
-      # TODO: Code me
-      return "5"
+      literal_type = random_element(configuration.literal_set, rng)
+      if literal_type == "INTEGER"
+        return rng.next_int.to_s
+      elsif literal_type == "FLOAT"
+        return rng.next_float.to_s
+      elsif literal_type == "BOOLEAN"
+        return rng.next_bool.to_s
+      else
+        puts "Unknown literal type: '#{literal_type}'"
+        return ""
+      end
     end
+
+    def random_element(array : Array, rng : Random) 
+      s = array.size
+      index = rng.rand(s)
+      return array[index]
+    end
+
   end
 end

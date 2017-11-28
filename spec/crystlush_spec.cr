@@ -23,6 +23,9 @@ describe Crystlush do
 
   it "should generate a genome" do
     generator = Crystlush::Generator.new
+    generator.configuration.instruction_set.push "INTEGER.+"
+    generator.configuration.instruction_set.push "INTEGER.DUP"
+    generator.configuration.literal_set.push "INTEGER"
     genome = generator.generate
   end
 end
