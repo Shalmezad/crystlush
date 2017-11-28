@@ -20,4 +20,9 @@ describe Crystlush do
     program = translator.translate(genome)
     program.should eq(expected_program)
   end
+
+  it "should generate a genome" do
+    generator = Crystlush::Generator.new
+    genome = generator.generate
+  end
 end
