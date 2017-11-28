@@ -5,6 +5,10 @@ module Crystlush
     class Configuration
       property instruction_set : Array(String) = [] of String
       property literal_set : Array(String) = [] of String
+      property min_random_integer : Int32 = -10
+      property max_random_integer : Int32 = 10
+      property min_random_float : Float64 = -1.0
+      property max_random_float : Float64 = 1.0
     end
 
     property configuration : Configuration = Configuration.new
@@ -48,9 +52,9 @@ module Crystlush
     def pick_literal(rng : Random) : String
       literal_type = random_element(configuration.literal_set, rng)
       if literal_type == "INTEGER"
-        return rng.next_int.to_s
+        return rng.rand(configuration.min_random_integer..configuration.max_random_integer).to_s
       elsif literal_type == "FLOAT"
-        return rng.next_float.to_s
+        return rng.rand(configuration.min_random_float..configuration.max_random_float).to_s
       elsif literal_type == "BOOLEAN"
         return rng.next_bool.to_s
       else
